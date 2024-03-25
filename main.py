@@ -22,14 +22,15 @@ target_image =  pygame.image.load("image/alarm_clock_fotor.png")
 target_width = 80
 target_heigth = 80
 # скорость перемещения
-speed = 3
+speed = 5
 speed_x = speed
 speed_y = speed
-list_speed = [3, 2, 1, -1, -2, -3]
+# список - для задания скорости: от -speed до speed, исключая 0
+list_speed = list(range(-1*speed, 0))+list(range(1, speed+1))
 
 # набранные очки
 ball = 0
-# шрифт
+# шрифт для отображения результата
 font = pygame.font.Font(None, 36)
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -40,6 +41,10 @@ target_y = random.randint(0, SCREEN_HEIGHT - target_heigth)
 
 # случайный цвет для заливки экрана
 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255) )
+if color == white:
+    # если вдруг белый, то шрифт - черный
+    color_txt = black
+color_txt = white
 
 running = True
 while running:
@@ -73,7 +78,7 @@ while running:
         speed_x = random.choice(list_speed)
         speed_y = random.choice(list_speed)
 
-    ball_txt = font.render(f"Счет: {ball}", True, white)
+    ball_txt = font.render(f"Счет: {ball}", True, color_txt)
     # вывести счет игры на экран
     screen.blit(ball_txt, [10, 10])
 
